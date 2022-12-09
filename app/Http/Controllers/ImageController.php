@@ -14,16 +14,9 @@ use Illuminate\Http\RedirectResponse;
 class ImageController extends Controller
 {
 
-    private Image $image;
-
-    public function __construct(Image $image)
-    {
-        $this->image = $image;
-    }
-
     public function index()
     {
-        $images = $this->image->all();
+        $images = Image::all();
 
         return view('image.index', compact('images'));
     }
@@ -39,26 +32,29 @@ class ImageController extends Controller
                           SaveHelperInterface    $saveHelper,
                           TransliterateInterface $transliteration): RedirectResponse
     {
-        $isImages = $request->hasFile('images');
-        if ($isImages) {
-            foreach($request->file('images') as $picture){
 
-                  $pictureName = $saveHelper->getOnlyName($picture->getClientOriginalName());
-                  $extension = $picture->getClientOriginalExtension();
-                  $savePath = $saveHelper->getSavePath($extension);
-                  $transliterate = $transliteration->transliterateClientName($pictureName, $extension);
-                  $clientName = $transliteration->toLower($transliterate);
+        if (!$request->hasFile('images'))
+        {
+            return redirect()->back();
+        }
 
-                  $imageSaver->setPicture($picture);
-                  $imageSaver->store($savePath);
-                  $thumbnailSaver->store($savePath);
+        foreach($request->file('images') as $picture)
+        {
+              $pictureName = $saveHelper->getOnlyName($picture->getClientOriginalName());
+              $extension = $picture->getClientOriginalExtension();
+              $savePath = $saveHelper->getSavePath($extension);
+              $transliterate = $transliteration->transliterateClientName($pictureName, $extension);
+              $clientName = $transliteration->toLower($transliterate);
 
-                  $image = app()->make(Image::class);
-                  $image->setPath($savePath);
-                  $image->setClientName($clientName);
-                  $image->save();
+              $imageSaver->setPicture($picture);
+              $imageSaver->store($savePath);
+              $thumbnailSaver->store($savePath);
 
-            }
+              $image = app()->make(Image::class);
+              $image->setPath($savePath);
+              $image->setClientName($clientName);
+              $image->save();
+
         }
 
         return redirect()->back()->with('success', 'Изображение успешно загружено');

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UploadImageRequest;
 use App\Models\Image;
+use App\Services\ImageCreate;
 use App\Services\ImageSaver;
 use App\Services\SaveHelperInterface;
 use App\Services\ThumbnailSaver;
@@ -26,35 +27,16 @@ class ImageController extends Controller
         return view('image.create');
     }
 
-    public function store(UploadImageRequest     $request,
-                          ImageSaver             $imageSaver,
-                          ThumbnailSaver         $thumbnailSaver,
-                          SaveHelperInterface    $saveHelper,
-                          TransliterateInterface $transliteration): RedirectResponse
+    public function store(UploadImageRequest $request) : RedirectResponse
     {
+        $isImage = $request->hasFile('images');
+        if (!$isImage) return redirect()->back();
 
-        if (!$request->hasFile('images'))
+        $images = $request->file('images');
+        foreach($images as $picture)
         {
-            return redirect()->back();
-        }
-
-        foreach($request->file('images') as $picture)
-        {
-              $pictureName = $saveHelper->getOnlyName($picture->getClientOriginalName());
-              $extension = $picture->getClientOriginalExtension();
-              $savePath = $saveHelper->getSavePath($extension);
-              $transliterate = $transliteration->transliterateClientName($pictureName, $extension);
-              $clientName = $transliteration->toLower($transliterate);
-
-              $imageSaver->setPicture($picture);
-              $imageSaver->store($savePath);
-              $thumbnailSaver->store($savePath);
-
-              $image = app()->make(Image::class);
-              $image->setPath($savePath);
-              $image->setClientName($clientName);
-              $image->save();
-
+              $dto = $request->data($picture);
+              app(ImageCreate::class)->create($dto);
         }
 
         return redirect()->back()->with('success', 'Изображение успешно загружено');

@@ -1,0 +1,15 @@
+[0;1;31m×[0m apache2.service - The Apache HTTP Server
+     Loaded: loaded (/lib/systemd/system/apache2.service; enabled; vendor preset: enabled)
+     Active: [0;1;31mfailed[0m (Result: exit-code) since Sat 2022-12-10 13:19:25 MSK; 14s ago
+       Docs: https://httpd.apache.org/docs/2.4/
+    Process: 26506 ExecStart=/usr/sbin/apachectl start [0;1;31m(code=exited, status=139)[0m
+        CPU: 44ms
+
+дек 10 13:19:25 user systemd[1]: Starting The Apache HTTP Server...
+дек 10 13:19:25 user apachectl[26509]: AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 127.0.1.1. Set the 'ServerName' directive globally to suppress this message
+дек 10 13:19:25 user apachectl[26506]: Segmentation fault (core dumped)
+дек 10 13:19:25 user apachectl[26506]: Action 'start' failed.
+дек 10 13:19:25 user apachectl[26506]: The Apache error log may have more information.
+дек 10 13:19:25 user systemd[1]: [0;1;39m[0;1;31m[0;1;39mapache2.service: Control process exited, code=exited, status=139/n/a[0m
+дек 10 13:19:25 user systemd[1]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mapache2.service: Failed with result 'exit-code'.[0m
+дек 10 13:19:25 user systemd[1]: [0;1;31m[0;1;39m[0;1;31mFailed to start The Apache HTTP Server.[0m

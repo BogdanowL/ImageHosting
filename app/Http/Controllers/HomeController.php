@@ -2,26 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Image;
+use App\Repositories\ImageRepository;
 
 class HomeController extends Controller
 {
-    private Image $image;
-
-    public function __construct(Image $image)
+    public function __construct(private ImageRepository $repository)
     {
-        $this->image = $image;
     }
 
     public function sortByName()
     {
-        $images = $this->image->orderBy('client_name')->get();
+        $images = $this->repository->sortByName();
         return view('image.index', compact('images'));
     }
 
     public function sortByTime()
     {
-        $images = $this->image->orderBy('created_at', 'desc')->get();
+        $images = $this->repository->sortByTime();
         return view('image.index', compact('images'));
     }
 }

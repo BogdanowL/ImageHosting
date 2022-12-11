@@ -4,8 +4,45 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "bebc2a4a7a9c476602ddf170885c6ce3",
+    "content-hash": "b80fef5179be18d8641a71c5e5148d47",
     "packages": [
+        {
+            "name": "apiato/container-installer",
+            "version": "v2.0.8",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/apiato/container-installer.git",
+                "reference": "dbf85cf22b7954e03ccef993b659e7195444e17b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/apiato/container-installer/zipball/dbf85cf22b7954e03ccef993b659e7195444e17b",
+                "reference": "dbf85cf22b7954e03ccef993b659e7195444e17b",
+                "shasum": ""
+            },
+            "require": {
+                "composer-plugin-api": "^2.0"
+            },
+            "type": "composer-plugin",
+            "extra": {
+                "class": "apiato\\installer\\ContainerInstallerPlugin"
+            },
+            "autoload": {
+                "psr-4": {
+                    "apiato\\installer\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "A Composer plugin for installing Apiato Containers (of type apiato-container).",
+            "support": {
+                "issues": "https://github.com/apiato/container-installer/issues",
+                "source": "https://github.com/apiato/container-installer/tree/v2.0.8"
+            },
+            "time": "2021-04-25T14:25:10+00:00"
+        },
         {
             "name": "asm89/stack-cors",
             "version": "v2.1.1",

@@ -13,6 +13,8 @@ class Image extends Model
     public const IMAGE_DIR = 'images/';
     public const THUMB = 'thumb_';
 
+    public const CLIENT_NAME = 'client_name';
+
     use HasFactory;
 
     protected $fillable = [

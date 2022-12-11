@@ -29,9 +29,6 @@ class ImageController extends Controller
 
     public function store(UploadImageRequest $request) : RedirectResponse
     {
-        $isImage = $request->hasFile('images');
-        if (!$isImage) return redirect()->back();
-
         $images = $request->file('images');
         foreach($images as $picture)
         {
